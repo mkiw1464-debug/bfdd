@@ -44,6 +44,8 @@ jobs:
             ONLY_ACTIVE_ARCH=NO \
             ASSETCATALOG_COMPILER_APPICON_NAME="" \
             ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT=YES \
+            CLANG_ENABLE_MODULES=NO \
+            OTHER_CFLAGS="-fno-modules -Wno-deprecated-declarations" \
             build \
             | xcpretty --color && exit "${PIPESTATUS[0]}"
 

@@ -46,8 +46,14 @@ jobs:
             ASSETCATALOG_COMPILER_SKIP_APP_STORE_DEPLOYMENT=YES \
             CLANG_ENABLE_MODULES=NO \
             OTHER_CFLAGS="-fno-modules -Wno-deprecated-declarations" \
-            build \
-            | xcpretty --color && exit "${PIPESTATUS[0]}"
+            2>&1 | tee "$RUNNER_TEMP/build.log" | xcpretty --color
+          EXIT=${PIPESTATUS[0]}
+          if [ $EXIT -ne 0 ]; then
+            echo "::group::Raw xcodebuild errors"
+            grep -E "error:|warning:|fatal:" "$RUNNER_TEMP/build.log" | head -60
+            echo "::endgroup::"
+          fi
+          exit $EXIT
 
       - name: Locate .app
         id: locate

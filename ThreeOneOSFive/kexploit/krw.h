@@ -8,6 +8,7 @@
 #ifndef krw_h
 #define krw_h
 
+#include <stddef.h>
 #import <stdint.h>
 #import <stdbool.h>
 #import "offsets.h"

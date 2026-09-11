@@ -1,0 +1,15 @@
+# Xcode
+build/
+*.xcworkspace/
+DerivedData/
+*.ipa
+*.dSYM
+*.dSYM.zip
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Local signing
+*.mobileprovision
+*.p12

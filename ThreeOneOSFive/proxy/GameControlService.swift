@@ -1,10 +1,6 @@
 import Foundation
 import Combine
 
-// MARK: - GameControlService
-// Central @ObservableObject — holds config state, wires ke GameBridge.
-// SwiftUI views @EnvironmentObject ini.
-
 final class GameControlService: ObservableObject {
 
     @Published var config = GameControlConfiguration()
@@ -26,13 +22,7 @@ final class GameControlService: ObservableObject {
             .store(in: &bag)
     }
 
-    // ── Slot binding ──────────────────────────────────────────────────
-
-    func slotBinding(_ idx: Int) -> Binding<Bool> {
-        Binding(get: { self.slotGet(idx) }, set: { self.slotSet(idx, $0) })
-    }
-
-    private func slotGet(_ i: Int) -> Bool {
+    func slotGet(_ i: Int) -> Bool {
         switch i {
         case 0:  return config.q00; case 1:  return config.q01
         case 2:  return config.q02; case 3:  return config.q03
@@ -49,7 +39,7 @@ final class GameControlService: ObservableObject {
         }
     }
 
-    private func slotSet(_ i: Int, _ v: Bool) {
+    func slotSet(_ i: Int, _ v: Bool) {
         switch i {
         case 0:  config.q00 = v; case 1:  config.q01 = v
         case 2:  config.q02 = v; case 3:  config.q03 = v
@@ -67,8 +57,6 @@ final class GameControlService: ObservableObject {
     }
 
     func resetAll() { config = GameControlConfiguration() }
-
-    // ── Persistence ───────────────────────────────────────────────────
 
     private func persist(_ c: GameControlConfiguration) {
         guard let d = try? JSONEncoder().encode(c) else { return }
